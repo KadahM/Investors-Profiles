@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרופילי משקיעים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: #f5f4f0;
+    color: #1a1a1a;
+    min-height: 100vh;
+    padding: 48px 24px;
+    direction: rtl;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .header {
+    margin-bottom: 40px;
+    text-align: right;
+  }
+
+  .header-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: #888;
+    margin-bottom: 8px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+  }
+
+  .header p {
+    font-size: 14px;
+    color: #666;
+    font-weight: 300;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: #999;
+    margin-bottom: 12px;
+    text-align: right;
+  }
+
+  .profiles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .terminal-card {
+    background: #1e1e2e;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #2a2a3e;
+  }
+
+  .terminal-topbar {
+    background: #2a2a3e;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    direction: ltr;
+  }
+
+  .terminal-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green { background: #28c840; }
+
+  .terminal-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #666;
+  }
+
+  .terminal-body {
+    padding: 20px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 2;
+    direction: rtl;
+  }
+
+  .t-name {
+    color: #cba6f7;
+    font-weight: 500;
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+
+  .t-line {
+    color: #cdd6f4;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .t-dash { color: #6c7086; }
+
+  .t-key { color: #89dceb; }
+  .t-val { color: #a6e3a1; }
+  .t-sep { color: #6c7086; margin: 0 4px; }
+
+  .t-meta {
+    margin-top: 4px;
+    padding-top: 12px;
+    border-top: 1px solid #2a2a3e;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: flex-end;
+  }
+
+  .t-meta-item {
+    font-size: 11px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .scores-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .score-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px 24px;
+    border: 1px solid #e8e6e0;
+  }
+
+  .score-card-title {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 14px;
+    text-align: right;
+    font-weight: 500;
+  }
+
+  .score-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .score-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  .score-item-label { font-size: 12px; color: #555; }
+
+  .score-track {
+    flex: 1;
+    background: #f0ede8;
+    border-radius: 4px;
+    height: 6px;
+    overflow: hidden;
+    direction: ltr;
+  }
+
+  .score-fill { height: 100%; border-radius: 4px; }
+  .score-num { font-size: 12px; font-weight: 600; min-width: 32px; text-align: left; direction: ltr; }
+
+  .input-block {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #e8e6e0;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .input-block-header {
+    background: #f9f8f5;
+    padding: 12px 24px;
+    border-bottom: 1px solid #e8e6e0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    letter-spacing: 0.08em;
+    text-align: right;
+  }
+
+  .input-block-body {
+    padding: 16px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.9;
+    background: #1e1e2e;
+    color: #cdd6f4;
+    direction: rtl;
+  }
+
+  .input-comment { color: #6c7086; }
+  .input-key { color: #89dceb; }
+  .input-val { color: #a6e3a1; }
+  .input-bracket { color: #cba6f7; }
+  .input-sep { color: #6c7086; }
+
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: #bbb;
+    margin-top: 32px;
+    font-weight: 300;
+  }
+
+  @media (max-width: 600px) {
+    .profiles-grid, .scores-row { grid-template-columns: 1fr; }
+    body { padding: 24px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-label">קלט מערכת הפרומפטים — Claude AI</div>
+    <h1>פרופילי המשקיעים</h1>
+    <p>כל הפרמטרים הוגדרו על ידי המשתמש — Claude מנתח בלבד</p>
+  </div>
+
+  <div class="section-title">פרופילים</div>
+  <div class="profiles-grid">
+
+    <div class="terminal-card">
+      <div class="terminal-topbar">
+        <div class="terminal-dots">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+        </div>
+        <div class="terminal-title">investor-a.input</div>
+      </div>
+      <div class="terminal-body">
+        <div class="t-name">משקיע א׳ — גיל 25</div>
+        <div class="t-line"><span class="t-dash">-</span> 30% קרנות</div>
+        <div class="t-line"><span class="t-dash">-</span> 30% מניות</div>
+        <div class="t-line"><span class="t-dash">-</span> 20% אג״ח</div>
+        <div class="t-line"><span class="t-dash">-</span> 10% זהב</div>
+        <div class="t-line"><span class="t-dash">-</span> 10% קריפטו</div>
+        <div class="t-meta">
+          <span class="t-meta-item"><span class="t-key">הון התחלתי</span><span class="t-sep">:</span><span class="t-val">$5,000</span></span>
+          <span class="t-sep">|</span>
+          <span class="t-meta-item"><span class="t-key">הפקדה חודשית</span><span class="t-sep">:</span><span class="t-val">$500</span></span>
+          <span class="t-sep">|</span>
+          <span class="t-meta-item"><span class="t-key">אופק</span><span class="t-sep">:</span><span class="t-val">10 שנים</span></span>
+          <span class="t-sep">|</span>
+          <span class="t-meta-item"><span class="t-key">מטרה</span><span class="t-sep">:</span><span class="t-val">צמיחה</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="terminal-card">
+      <div class="terminal-topbar">
+        <div class="terminal-dots">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+        </div>
+        <div class="terminal-title">investor-b.input</div>
+      </div>
+      <div class="terminal-body">
+        <div class="t-name">משקיע ב׳ — גיל 25</div>
+        <div class="t-line"><span class="t-dash">-</span> 60% קרנות</div>
+        <div class="t-line"><span class="t-dash">-</span> 20% אג״ח</div>
+        <div class="t-line"><span class="t-dash">-</span> 20% זהב</div>
+        <div class="t-meta">
+          <span class="t-meta-item"><span class="t-key">הון התחלתי</span><span class="t-sep">:</span><span class="t-val">$5,000</span></span>
+          <span class="t-sep">|</span>
+          <span class="t-meta-item"><span class="t-key">הפקדה חודשית</span><span class="t-sep">:</span><span class="t-val">$500</span></span>
+          <span class="t-sep">|</span>
+          <span class="t-meta-item"><span class="t-key">אופק</span><span class="t-sep">:</span><span class="t-val">10 שנים</span></span>
+          <span class="t-sep">|</span>
+          <span class="t-meta-item"><span class="t-key">מטרה</span><span class="t-sep">:</span><span class="t-val">צמיחה</span></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">הרכב תיקים — ויזואלי</div>
+  <div class="scores-row">
+
+    <div class="score-card">
+      <div class="score-card-title">משקיע א׳ — הקצאת נכסים</div>
+      <div class="score-items">
+        <div class="score-item">
+          <div class="score-item-label">קרנות</div>
+          <div class="score-track"><div class="score-fill" style="width:30%;background:#534AB7;"></div></div>
+          <div class="score-num" style="color:#534AB7;">30%</div>
+        </div>
+        <div class="score-item">
+          <div class="score-item-label">מניות</div>
+          <div class="score-track"><div class="score-fill" style="width:30%;background:#534AB7;"></div></div>
+          <div class="score-num" style="color:#534AB7;">30%</div>
+        </div>
+        <div class="score-item">
+          <div class="score-item-label">אג״ח</div>
+          <div class="score-track"><div class="score-fill" style="width:20%;background:#0F6E56;"></div></div>
+          <div class="score-num" style="color:#0F6E56;">20%</div>
+        </div>
+        <div class="score-item">
+          <div class="score-item-label">זהב</div>
+          <div class="score-track"><div class="score-fill" style="width:10%;background:#BA7517;"></div></div>
+          <div class="score-num" style="color:#BA7517;">10%</div>
+        </div>
+        <div class="score-item">
+          <div class="score-item-label">קריפטו</div>
+          <div class="score-track"><div class="score-fill" style="width:10%;background:#D85A30;"></div></div>
+          <div class="score-num" style="color:#D85A30;">10%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="score-card">
+      <div class="score-card-title">משקיע ב׳ — הקצאת נכסים</div>
+      <div class="score-items">
+        <div class="score-item">
+          <div class="score-item-label">קרנות</div>
+          <div class="score-track"><div class="score-fill" style="width:60%;background:#534AB7;"></div></div>
+          <div class="score-num" style="color:#534AB7;">60%</div>
+        </div>
+        <div class="score-item">
+          <div class="score-item-label">אג״ח</div>
+          <div class="score-track"><div class="score-fill" style="width:20%;background:#0F6E56;"></div></div>
+          <div class="score-num" style="color:#0F6E56;">20%</div>
+        </div>
+        <div class="score-item">
+          <div class="score-item-label">זהב</div>
+          <div class="score-track"><div class="score-fill" style="width:20%;background:#BA7517;"></div></div>
+          <div class="score-num" style="color:#BA7517;">20%</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">בלוק הקלט המלא — ניתן לשימוש חוזר</div>
+  <div class="input-block">
+    <div class="input-block-header">MASTER INPUT BLOCK — ניתן להחליף עבור כל משקיע</div>
+    <div class="input-block-body">
+      <div><span class="input-comment">// פרופיל משקיע</span></div>
+      <div><span class="input-key">גיל</span><span class="input-sep">: </span><span class="input-bracket">[</span><span class="input-val">X</span><span class="input-bracket">]</span></div>
+      <div><span class="input-key">אופק השקעה</span><span class="input-sep">: </span><span class="input-bracket">[</span><span class="input-val">X שנים</span><span class="input-bracket">]</span></div>
+      <div><span class="input-key">מטרה</span><span class="input-sep">: </span><span class="input-bracket">[</span><span class="input-val">צמיחה / הכנסה / שמירת ערך</span><span class="input-bracket">]</span></div>
+      <div>&nbsp;</div>
+      <div><span class="input-comment">// הרכב תיק</span></div>
+      <div><span class="input-key">נכס 1</span><span class="input-sep">: </span><span class="input-val">X%</span></div>
+      <div><span class="input-key">נכס 2</span><span class="input-sep">: </span><span class="input-val">X%</span></div>
+      <div><span class="input-key">נכס 3</span><span class="input-sep">: </span><span class="input-val">X%</span></div>
+      <div>&nbsp;</div>
+      <div><span class="input-comment">// נתוני השקעה</span></div>
+      <div><span class="input-key">הון התחלתי</span><span class="input-sep">: </span><span class="input-val">$X</span></div>
+      <div><span class="input-key">סכום הפקדה חודשית קבועה</span><span class="input-sep">: </span><span class="input-val">$X</span></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    פלט אנליטי בלבד — אינו מהווה ייעוץ פיננסי · הופק באמצעות Claude AI
+  </div>
+
+</div>
+</body>
+</html>
